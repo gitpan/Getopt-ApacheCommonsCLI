@@ -1,4 +1,4 @@
-Getopt-ApacheCommonsCLI version 0.01
+Getopt-ApacheCommonsCLI version 0.02
 ======================================
 
 SYNOPSIS
@@ -21,7 +21,7 @@ This module requires these other modules and libraries:
 
 Getopt::Long
 
-COPYRIGHT AND LICENCE
+COPYRIGHT AND LICENSE
 
 Copyright (C) 2014 by James Briggs
 

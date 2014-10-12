@@ -4,9 +4,9 @@
       "James Briggs <james.briggs@yahoo.com>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 6.62, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.120921",
    "license" : [
-      "unknown"
+      "perl_5"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
@@ -22,7 +22,9 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "0"
+            "Data::Dumper" : "0",
+            "ExtUtils::MakeMaker" : "0",
+            "Test::More" : "0"
          }
       },
       "configure" : {
@@ -32,10 +34,11 @@
       },
       "runtime" : {
          "requires" : {
-            "Getopt::Long" : "2.35"
+            "Getopt::Long" : "2.35",
+            "constant" : "0"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "0.01"
+   "version" : "0.02"
 }

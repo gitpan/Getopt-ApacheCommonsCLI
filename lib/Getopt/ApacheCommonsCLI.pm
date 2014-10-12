@@ -24,7 +24,7 @@ our @EXPORT_OK = qw(
 our @EXPORT = qw(
 );
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 # Preloaded methods go here.
 
@@ -210,19 +210,26 @@ Getopt::ApacheCommonsCLI - Perl extension for parsing arguments similar to Apach
 
 =head1 SYNOPSIS
 
+ use Getopt::ApacheCommonsCLI qw(GetOptionsApacheCommonsCLI);
+
 =head1 DESCRIPTION
 
 Getopt::ApacheCommonsCLI - Perl extension for parsing arguments similar to Apache Commons CLI Java library.
 
- use Getopt::ApacheCommonsCLI qw(GetOptionsApacheCommonsCLI);
-
- http://commons.apache.org/proper/commons-cli/
-
 The Apache Commons CLI Java library implements options parsing according to at least 3 different standards:
 
- - Unix
- - POSIX (bundling, enabled with OPTIONS_BUNDLING=1 flag)
- - Java (-D options with right-to-left argument precedence, enabled with JAVA_DOPTS=1)
+=over
+
+=item 1.
+Unix
+
+=item 2.
+POSIX (bundling, enabled with OPTIONS_BUNDLING=1 flag)
+
+=item 3.
+Java (-D options with right-to-left argument precedence, enabled with JAVA_DOPTS=1)
+
+=back
 
 Certainly there will be parsing ambiguities. An example is that single-character option bundling
 and non-spaced single-character option args can be parsed in multiple ways for the same input.
@@ -235,26 +242,58 @@ especially when mixing long options and bundles. Caveat emptor."
 
 Here are some definitions for the purpose of this module:
 
- - 'single-character option' (ie. -a)
- - 'long option' is the longest option name or alias for an option (ie. --password) 
- - 'short option' is the shortest option name or alias for an option (usually a single-character option) (ie. -pw)
- - 'Java option' is a single-character option starting with '-D' or '--D' and contains '=' (ie. -Dabc=xyz)
- - 'bundling' is combining multiple single-character options after a single dash or double dash. (ie. ls -lat)
+=over
+
+=item *
+'single-character option' (ie. -a)
+
+=item *
+'long option' is the longest option name or alias for an option (ie. --password)
+
+=item *
+'short option' is the shortest option name or alias for an option (usually a single-character option) (ie. -pw)
+
+=item *
+'Java option' is a single-character option starting with '-D' or '--D' and contains '=' (ie. -Dabc=xyz)
+
+=item *
+'bundling' is combining multiple single-character options after a single dash or double dash. (ie. ls -lat)
+
+=back
 
 This Perl module implements:
 
- - options can have both a long and short name
- - space or = for trailing option arguments
- - allows single-character options to have a non-spaced trailing arg
- - options that are seen but don't take an arg have their value set to 1.
- - does not enable POSIX single-character options bundling by default, defined in OPTIONS_BUNDLING
- - argument assignment precedence is defined in LEFT_TO_RIGHT_ARGS flag, default is from left to right (Java standard is right-to-left)
- - Java options parsing is defined with JAVA_DOPTS, default is disabled
- - customized error message subroutine for missing args.
+=over
+
+=item *
+options can have both a long and short name
+
+=item *
+space or = for trailing option arguments
+
+=item *
+allows single-character options to have a non-spaced trailing arg
+
+=item *
+options that are seen but don't take an arg have their value set to 1.
+
+=item *
+does not enable POSIX single-character options bundling by default, defined in OPTIONS_BUNDLING
+
+=item *
+argument assignment precedence is defined in LEFT_TO_RIGHT_ARGS flag, default is from left to right (Java standard is right-to-left)
+
+=item *
+Java options parsing is defined with JAVA_DOPTS, default is disabled
+
+=item *
+customized error message subroutine for missing args.
+
+=back
 
 For multiple-value arguments, either quote or comma-separate them. Read Getopt::Long documentation for more information.
-  
-Input specification format is: "(long-option)|(short-option)[:=]([fios])".
+
+Input specification format is: "(long-option)|(short-option)[:=]?([fios])?".
 
  my $result = GetOptionsApacheCommonsCLI(\@spec, \%opts, \%options, \&do_err);
 
@@ -268,6 +307,21 @@ Input specification format is: "(long-option)|(short-option)[:=]([fios])".
  DEBUG (default=0, enabled=1)
  JAVA_DOPTS (default=0, enabled=1, implies post-processing with OPT_PREC_RIGHT_TO_LEFT for matching options)
  OPT_PRECEDENCE (default=OPT_PREC_UNIQUE, also OPT_PREC_LEFT_TO_RIGHT and OPT_PREC_RIGHT_TO_LEFT)
+
+Return values
+
+=over
+
+=item *
+Getopt::ApacheCommonsCLI returns 1=for success, 0=failure
+
+=item *
+a list of errors in $opts{'__errors__'}
+
+=item *
+@ARGV contains remainder of command line.
+
+=back
 
 =head1 EXAMPLE
 
@@ -288,7 +342,7 @@ Input specification format is: "(long-option)|(short-option)[:=]([fios])".
 
    my $DEBUG = 1;
 
-  # input spec format is: "longest-option|(short-option)(:[fios])"
+   # input spec format is: "longest-option|(short-option)(:[fios])"
 
    my @spec = ("include-all-sstables|a",
                "column-family|cf:s",
@@ -334,7 +388,7 @@ Input specification format is: "(long-option)|(short-option)[:=]([fios])".
 
 =head2 EXPORT
 
-None by default.
+No symbols are exported by default.
 
 The following symbols can be imported:
 
@@ -346,6 +400,10 @@ The following symbols can be imported:
 =head1 SEE ALSO
 
 Getopt::Long
+
+Apache Commons CLI Library
+
+http://commons.apache.org/proper/commons-cli/
 
 =head1 AUTHOR
 
